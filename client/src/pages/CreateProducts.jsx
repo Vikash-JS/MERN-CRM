@@ -1,8 +1,13 @@
 import { Button, FileInput, Select, TextInput } from "flowbite-react";
+import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 export default function CreateProduct() {
+	const [formData, setFormData] = useState({});
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.id]: e.target.value });
+	};
 	return (
 		<div className="p-3 max-w-3xl mx-auto min-h-screen">
 			<h1 className="text-center text-3xl my-7 font-semibold">Add Your Product</h1>
@@ -14,8 +19,9 @@ export default function CreateProduct() {
 						required
 						id="title"
 						className="flex-1"
+						onChange={handleChange}
 					/>
-					<Select>
+					<Select id="category" onChange={handleChange}>
 						<option value="uncategorized">Select a category</option>
 						<option value="cloud">Cloud</option>
 						<option value="iaas">Infra as a service</option>
@@ -30,6 +36,8 @@ export default function CreateProduct() {
 					</Button>
 				</div>
 				<ReactQuill
+					id="content"
+					onChange={handleChange}
 					required
 					theme="snow"
 					placeholder="Description..."
